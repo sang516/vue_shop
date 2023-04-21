@@ -101,7 +101,6 @@
 </template>
 
 <script>
-import { valid } from 'joi';
 
 export default {
   data() {
