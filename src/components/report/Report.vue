@@ -13,12 +13,41 @@
 
 <script>
 import * as echarts from "echarts";
+import _ from 'lodash';
 export default {
   data() {
-    return {};
-  },
-  created() {},
-  methods: {
+    return {
+        options: {
+        title: {
+          text: '用户来源'
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#E9EEF3'
+            }
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: [
+          {
+            boundaryGap: false
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value'
+          }
+        ]
+      }
+    };
   },
   async mounted() {
     // 基于准备好的dom，初始化echarts实例
@@ -26,9 +55,9 @@ export default {
 
     const {data:res} = await this.$http.get(`reports/type/1`);
     if(res.meta.status !== 200) return this.$message.error(res.meta.msg);
-
+    const result = _.merge(res.data,this.options);
     // 指定图表的配置项和数据
-    myChart.setOption(res.data);
+    myChart.setOption(result);
   },
 };
 </script>
